@@ -28,5 +28,25 @@ namespace login{
             return true;
         }
 
+        private void button1_Click(object sender,EventArgs e)
+        {
+            if(isValid())
+            {
+                using(SqlConnection conn = new SqlConnection(@"Data Source =(LocalDB)\MSQLLocalDB;AttachDbFilename=C:\Users\user\source\repos\login\Database1.mdf;Integrated Security=True"))
+                {
+                    string query = "SELECT *FROM LOGIN WHERE username = '" + textBox1.Text.Trim() + " 'AND password = '" + textBox2.Text.Trim() +" ' ";
+                    SqlDataAdapter sda = new SqlDataAdapter(query, conn);
+                    DataTable dta = new DataTable();
+                    sda.Fill(dta);
+                    if (dta.Rows.Count == 1)
+                    {
+                        dashboard dashboard = new dashboard();
+                        this.Hide();
+                        dashboard.Show();
+                    }
+                }          
+            }
+        }
+
     }
 }
